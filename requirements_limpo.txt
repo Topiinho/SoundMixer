@@ -1,0 +1,7 @@
+# SoundMixer - Dependencias Essenciais (Versao Limpa)
+
+# Interface desktop nativa
+pywebview
+
+# Sistema e processos
+psutil
