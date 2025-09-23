@@ -1,17 +1,14 @@
 import webview
 
 class Window_Service:
-    def __init__(self, title: str, url: str = None):
+    def __init__(self, title: str, url: str, width: int = 1400, height: int = 800):
         self.title = title
         self.url = url
-
-    def load_html(self):
-        with open(self.url, "r", encoding="utf-8") as html:
-            return html.read()
+        self.width = width
+        self.height = height
 
     def creat_window(self):
-        html = {"html": Window_Service.load_html(self)}
-        return webview.create_window(self.title, url=None, js_api=None, **html)
+        return webview.create_window(self.title, self.url, width=self.width, height=self.height)
     
     def start(self):
         webview.start()

@@ -1,0 +1,134 @@
+/* Importando uma fonte similar à do Discord */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+/* :root é onde definimos nossas variáveis de cor para o tema */
+:root {
+    --background-primary: #36393f;
+    --background-secondary: #2f3136;
+    --background-tertiary: #202225;
+    --text-primary: #ffffff;
+    --text-muted: #b9bbbe;
+    --interactive-normal: #b9bbbe;
+    --interactive-hover: #dcddde;
+    --interactive-active: #ffffff;
+    --background-modifier-hover: rgba(79, 84, 92, 0.3);
+    --background-modifier-active: rgba(79, 84, 92, 0.48);
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--background-primary);
+    color: var(--text-primary);
+    margin: 0;
+    overflow: hidden; /* Evita barras de rolagem indesejadas */
+}
+
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* --- Estilos da Sidebar --- */
+.sidebar {
+    width: 260px;
+    background-color: var(--background-secondary);
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    flex-shrink: 0; /* Impede que a sidebar encolha */
+}
+
+.sidebar-header {
+    padding: 8px;
+    margin-bottom: 16px;
+}
+
+.app-logo {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.user-profile {
+    background-color: var(--background-tertiary);
+    padding: 8px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.user-name {
+    font-weight: 600;
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1; /* Faz este menu ocupar o espaço disponível */
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 5px;
+    color: var(--interactive-normal);
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: 4px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-link i {
+    margin-right: 16px;
+    width: 20px; /* Alinha os textos */
+    text-align: center;
+}
+
+.nav-link:hover {
+    background-color: var(--background-modifier-hover);
+    color: var(--interactive-hover);
+}
+
+.nav-link.active {
+    background-color: var(--background-modifier-active);
+    color: var(--interactive-active);
+}
+
+.sidebar-footer {
+    margin-top: auto; /* Empurra o footer para o final */
+}
+
+/* --- Estilos do Conteúdo Principal --- */
+.main-content {
+    flex-grow: 1;
+    padding: 24px;
+    background-color: var(--background-primary);
+    overflow-y: auto; /* Adiciona scroll se o conteúdo for grande */
+}
+
+.content-header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-bottom: 1px solid var(--background-tertiary);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+}
+
+.audio-card {
+    background-color: var(--background-secondary);
+    padding: 16px 24px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
