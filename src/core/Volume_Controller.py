@@ -23,12 +23,17 @@ class Apps_Volume_Controller:
     def toggle_mute(self):
         if self.session:
             interface = self.session.SimpleAudioVolume
+            # Inverte o estado atual
             interface.SetMute(not interface.GetMute(), None)
 
-            status = "mutado" if interface.GetMute() else "desmutado"
+            # Pega o novo estado e o retorna
+            is_muted = interface.GetMute()
+            status = "mutado" if is_muted else "desmutado"
             print(f"'{self.process_name}' foi {status}.")
+            return is_muted
         else:
             print(f"Não foi possível alternar o mudo. Processo '{self.process_name}' não encontrado.")
+            return None
     
     def set_volume(self, level):
         if self.session:
@@ -38,6 +43,7 @@ class Apps_Volume_Controller:
 
             interface.SetMasterVolume(volume, None)
             self.volume = volume
+            volume = int(self.volume * 100)
             print(f"Volume de '{self.process_name}' definido para {volume}%.")
         else:
             print(f"Não foi possível definir o volume. Processo '{self.process_name}' não encontrado.")
@@ -60,6 +66,10 @@ class Master_Volume_Controller:
     
     def toggle_mute(self):
         self.controller.SetMute(not self.controller.GetMute(), None)
+        is_mute = "Desmutado"
+        if self.controller.GetMute():
+            is_mute = "Mutado"
+        return is_mute
 
     def set_volume(self, level):
         volume = max(0.0, min(1.0, level / 100.0))
