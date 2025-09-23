@@ -31,19 +31,20 @@ SoundMixer/
 * [ OK ] Configuração do ambiente Python + PyWebView
 * [ OK ] Implementar detecção de apps com áudio (pycaw + psutil)
 * [ OK ] Criar controle básico de volume (individual + master)
-* [ ] Interface simples listando apps e sliders de volume
+* [ OK ] Interface simples listando apps e sliders de volume
 
 ## 🗓️ Fase 2 – Interface e UX
 
-* [ ] Implementar tema estilo Discord (CSS + Bootstrap)
-* [ ] Adicionar ícones (Font Awesome)
-* [ ] Melhorar responsividade e design dos sliders
+* [ OK ] Implementar tema estilo Discord (CSS + Bootstrap)
+* [ OK ] Adicionar ícones (Font Awesome)
+* [ OK ] Melhorar responsividade e design dos sliders
 * [ ] Criar painel de configurações básicas
 
 ## 🗓️ Fase 3 – Funcionalidades Avançadas
 
 * [ ] Suporte a Virtual Audio Cables (roteamento básico)
-* [ ] Implementar Mute/Solo por aplicação
+* [ OK ] Implementar Mute por aplicação
+* [ ] Implementar Solo por aplicação
 * [ ] Adicionar VU Meters (níveis de áudio em tempo real)
 * [ ] Criar Spectrum Analyzer simples
 
