@@ -39,13 +39,23 @@ body {
 }
 
 .sidebar-header {
-    padding: 8px;
-    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espaço entre o logo e o texto */
+    padding: 20px;
+    border-bottom: 1px solid var(--background-tertiary);
 }
 
 .app-logo {
     color: var(--text-primary);
     font-weight: 700;
+}
+
+.app-logo-img {
+    height: 50px;
+    width: 50px; /* Definir largura e altura iguais */
+    border-radius: 8px;
+    object-fit: cover; /* Faz a imagem cobrir o espaço, cortando o excesso */
 }
 
 .user-profile {
@@ -115,11 +125,26 @@ body {
     overflow-y: auto; /* Adiciona scroll se o conteúdo for grande */
 }
 
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .content-header h1 {
     font-size: 1.5rem;
     font-weight: 700;
     border-bottom: 1px solid var(--background-tertiary);
     padding-bottom: 16px;
+    margin-bottom: 24px;
+    /* Adicionado para garantir que o h1 não encolha */
+    flex-shrink: 0;
+}
+
+#audio-player-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
     margin-bottom: 24px;
 }
 
@@ -175,6 +200,27 @@ body {
     margin-right: 12px;
 }
 
+#master-volume-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 350px; /* Largura do controle master */
+    padding-bottom: 16px; /* Alinhar com o padding do h1 */
+    margin-bottom: 24px; /* Alinhar com o margin do h1 */
+}
+
+#master-volume-container .volume-control {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#master-volume-container .master-label {
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
 /* --- Adicione estes novos estilos no final do arquivo --- */
 .mute-btn {
     background: none;
@@ -193,4 +239,11 @@ body {
 .form-range:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+/* Estilo para o novo título */
+.app-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-normal);
 }

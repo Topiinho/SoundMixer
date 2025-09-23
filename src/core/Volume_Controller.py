@@ -42,7 +42,7 @@ class Apps_Volume_Controller:
             volume = max(0.0, min(1.0, level / 100.0))
 
             interface.SetMasterVolume(volume, None)
-            self.volume = volume
+            self.volume = self.session.SimpleAudioVolume.GetMasterVolume()
             volume = int(self.volume * 100)
             print(f"Volume de '{self.process_name}' definido para {volume}%.")
         else:
@@ -55,6 +55,12 @@ class Master_Volume_Controller:
         self.controller = self.volume_control()
         self.volume = self._get_volume()
 
+    def get_state(self):
+        return {
+            'volume': self._get_volume(),
+            'is_muted': self.controller.GetMute()
+        }
+
     def volume_control(self):
         interface = self.speakers.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
         volume_control = cast(interface, POINTER(IAudioEndpointVolume))
@@ -65,16 +71,19 @@ class Master_Volume_Controller:
         return volume
     
     def toggle_mute(self):
-        self.controller.SetMute(not self.controller.GetMute(), None)
-        is_mute = "Desmutado"
-        if self.controller.GetMute():
-            is_mute = "Mutado"
-        return is_mute
+        current_mute_state = self.controller.GetMute()
+        self.controller.SetMute(not current_mute_state, None)
+        
+        new_mute_state = self.controller.GetMute()
+        status = "Mutado" if new_mute_state else "Desmutado"
+        print(f"Volume master {status}.")
+        return new_mute_state
 
     def set_volume(self, level):
         volume = max(0.0, min(1.0, level / 100.0))
         self.controller.SetMasterVolumeLevelScalar(volume, None)
         self.volume = self._get_volume()
+        print(f"Volume master definido para {self.volume}%.")
 
 
 def main():

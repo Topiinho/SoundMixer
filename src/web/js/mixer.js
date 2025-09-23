@@ -1,7 +1,9 @@
 // Este evento garante que o código só rode quando a ponte pywebview estiver pronta
 window.addEventListener('pywebviewready', function() {
-    // Chama a função get_audio_apps() da nossa classe Api em Python
+    // Chama a função para apps
     pywebview.api.get_audio_apps().then(update_app_list);
+    // Chama a função para o volume master
+    pywebview.api.get_master_state().then(setup_master_controls);
 });
 
 // Esta função vai receber a lista de apps do Python e atualizar o HTML
@@ -76,3 +78,51 @@ function update_app_list(apps) {
         });
     });
 }
+
+// --- NOVA FUNÇÃO PARA O VOLUME MASTER ---
+function setup_master_controls(state) {
+    console.log("Estado do Master recebido:", state);
+    const container = document.getElementById('master-volume-container');
+    if (!container) return;
+
+    const muted_class = state.is_muted ? 'fa-volume-mute' : 'fa-volume-up';
+    const slider_disabled = state.is_muted ? 'disabled' : '';
+
+    container.innerHTML = `
+        <span class="master-label">Master</span>
+        <div class="volume-control">
+            <button id="master-mute-btn" class="mute-btn" title="Mutar/Desmutar Master">
+                <i class="fas ${muted_class}"></i>
+            </button>
+            <input id="master-volume-slider" type="range" class="form-range" min="0" max="100" value="${state.volume}" ${slider_disabled}>
+            <span id="master-volume-percentage" class="volume-percentage">${state.volume}%</span>
+        </div>
+    `;
+
+    // Adicionar Listeners aos novos elementos
+    const masterSlider = document.getElementById('master-volume-slider');
+    const masterMuteBtn = document.getElementById('master-mute-btn');
+    const masterPercentage = document.getElementById('master-volume-percentage');
+    
+    masterSlider.addEventListener('input', function() {
+        const volumeLevel = parseInt(this.value, 10);
+        masterPercentage.textContent = `${volumeLevel}%`;
+        pywebview.api.set_master_volume(volumeLevel);
+    });
+
+    masterMuteBtn.addEventListener('click', function() {
+        const icon = this.querySelector('i');
+        pywebview.api.toggle_master_mute().then(isMuted => {
+            if (isMuted) {
+                icon.classList.remove('fa-volume-up');
+                icon.classList.add('fa-volume-mute');
+                masterSlider.disabled = true;
+            } else {
+                icon.classList.remove('fa-volume-mute');
+                icon.classList.add('fa-volume-up');
+                masterSlider.disabled = false;
+            }
+        });
+    });
+}
+

@@ -1,8 +1,8 @@
-# 🎛️ Projeto SoundMixer
+# Projeto Sonus Mixer
 
 ## 📋 Visão Geral
 
-O **SoundMixer** é um mixer de áudio profissional para Windows, com interface moderna inspirada em ferramentas como **Discord**, **OBS Studio** e **VoiceMeeter**. O objetivo é oferecer **controle granular** de áudio por aplicação, roteamento virtual e monitoramento em tempo real, tudo em uma interface intuitiva e leve (sem Electron).
+O **Sonus Mixer** é um mixer de áudio profissional para Windows, com interface moderna inspirada em ferramentas como **Discord**, **OBS Studio** e **VoiceMeeter**. O objetivo é oferecer **controle granular** de áudio por aplicação, roteamento virtual e monitoramento em tempo real, tudo em uma interface intuitiva e leve (sem Electron).
 
 ---
 
