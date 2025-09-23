@@ -28,9 +28,9 @@ SoundMixer/
 
 ## 🗓️ Fase 1 – MVP (Base do Projeto)
 
-* [ ] Configuração do ambiente Python + PyWebView
-* [ ] Implementar detecção de apps com áudio (pycaw + psutil)
-* [ ] Criar controle básico de volume (individual + master)
+* [ OK ] Configuração do ambiente Python + PyWebView
+* [ OK ] Implementar detecção de apps com áudio (pycaw + psutil)
+* [ OK ] Criar controle básico de volume (individual + master)
 * [ ] Interface simples listando apps e sliders de volume
 
 ## 🗓️ Fase 2 – Interface e UX
