@@ -2,6 +2,7 @@ import os
 from src.web.Screem import Window_Service
 from src.core.Apps_Controller import Apps_Service
 from src.core.Volume_Controller import Apps_Volume_Controller, Master_Volume_Controller
+from src.core.Device_Controller import Devices_Services
 
 
 class Api:
@@ -38,8 +39,20 @@ class Api:
         controller.set_volume(volume_level)
         volume_level = controller.volume
         return volume_level
-        
+    
+    def get_inputs_devices(self):
+        return Devices_Services.get_input_devices()
+    
+    def get_output_devices(self):
+        return Devices_Services.get_output_devices()
 
+    def set_output_device(self, device_id):
+        service = Devices_Services()
+        service.set_output_device(device_id)
+
+    def set_input_device(self, device_id):
+        service = Devices_Services()
+        service.set_input_device(device_id)
 
 
 
