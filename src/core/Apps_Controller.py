@@ -7,9 +7,13 @@ import win32api
 from PIL import Image, ImageWin
 import io
 import base64
+from typing import List, Dict, Any, Optional
+from ..utils.logger import setup_logger
 
-# --- Adicione esta função auxiliar ---
-def get_icon_as_base64(pid):
+
+logger = setup_logger(__name__)
+
+def get_icon_as_base64(pid: int) -> Optional[str]:
     try:
         proc = psutil.Process(pid)
         exe_path = proc.exe()
@@ -17,7 +21,6 @@ def get_icon_as_base64(pid):
         if not exe_path:
             return None
 
-        # Extrai o ícone do executável
         ico_x = win32api.GetSystemMetrics(win32con.SM_CXICON)
         ico_y = win32api.GetSystemMetrics(win32con.SM_CYICON)
         large, small = win32gui.ExtractIconEx(exe_path, 0)
@@ -26,7 +29,6 @@ def get_icon_as_base64(pid):
         if hicon is None:
             return None
 
-        # Converte o ícone para um formato de imagem que o Pillow entende
         hdc = win32ui.CreateDCFromHandle(win32gui.GetDC(0))
         hbmp = win32ui.CreateBitmap()
         hbmp.CreateCompatibleBitmap(hdc, ico_x, ico_y)
@@ -34,7 +36,6 @@ def get_icon_as_base64(pid):
         hdc.SelectObject(hbmp)
         hdc.DrawIcon((0, 0), hicon)
 
-        # Converte para um objeto de imagem do Pillow
         bmp_info = hbmp.GetInfo()
         bmp_str = hbmp.GetBitmapBits(True)
         img = Image.frombuffer(
@@ -43,17 +44,15 @@ def get_icon_as_base64(pid):
             bmp_str, 'raw', 'BGRA', 0, 1
         )
 
-        # Salva a imagem em memória como PNG
         with io.BytesIO() as output:
             img.save(output, format="PNG")
             contents = output.getvalue()
         
-        # Codifica em Base64 para enviar via web
         encoded_string = base64.b64encode(contents).decode('utf-8')
         return f"data:image/png;base64,{encoded_string}"
 
     except Exception as e:
-        # print(f"Erro ao obter ícone para PID {pid}: {e}")
+        logger.debug(f"Erro ao obter ícone para PID {pid}: {e}")
         return None
     finally:
         if 'hicon' in locals() and hicon:
@@ -61,7 +60,7 @@ def get_icon_as_base64(pid):
 
 class Apps_Service:
     @staticmethod
-    def get_all_apps():
+    def get_all_apps() -> List[Dict[str, Any]]:
         apps = []
         seen_apps = set()
         
@@ -76,7 +75,6 @@ class Apps_Service:
                     seen_apps.add(app_name)
                     pid = session.Process.pid
                     
-                    # --- Obter volume e estado de mute ---
                     volume_interface = session.SimpleAudioVolume
                     current_volume = round(volume_interface.GetMasterVolume() * 100)
                     is_muted = volume_interface.GetMute()
@@ -89,4 +87,33 @@ class Apps_Service:
                         'is_muted': is_muted
                     })
         return apps
+
+
+def main():
+    logger.info("🎵 === DEMONSTRAÇÃO: DETECÇÃO DE APLICAÇÕES ===")
+
+    try:
+        apps = Apps_Service.get_all_apps()
+
+        if not apps:
+            logger.info("ℹ️  Nenhuma aplicação com áudio ativo encontrada.")
+            logger.info("💡 Execute um player de música ou vídeo e tente novamente.")
+        else:
+            logger.info(f"🔍 Encontradas {len(apps)} aplicação(ões) com áudio ativo:")
+
+            for i, app in enumerate(apps, 1):
+                logger.info(f"  {i}. {app['name']}")
+                logger.info(f"     📊 Volume: {app['volume']}%")
+                logger.info(f"     🔇 Mutado: {'Sim' if app['is_muted'] else 'Não'}")
+                logger.info(f"     🆔 PID: {app['pid']}")
+                if app['icon']:
+                    logger.info(f"     🖼️  Ícone: Presente")
+                logger.info("     " + "-" * 30)
+
+    except Exception as e:
+        logger.error(f"❌ Erro na demonstração: {e}")
+
+
+if __name__ == "__main__":
+    main()
 

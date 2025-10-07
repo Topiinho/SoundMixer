@@ -1,4 +1,16 @@
-pycaw
-psutil
-comtypes
-pywebview
+# === Dependências Principais ===
+pycaw>=20240210
+psutil>=5.9.0
+comtypes>=1.1.14
+pywebview[cef]==4.4.1
+
+# === Dependências do Sistema Windows ===
+pywin32>=306
+
+# === Processamento de Imagens ===
+pillow>=10.0.0
+
+# === Opcional - Desenvolvimento ===
+# pytest>=7.0.0
+# black>=23.0.0
+# flake8>=6.0.0

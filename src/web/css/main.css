@@ -1,0 +1,87 @@
+/* SoundMixer - CSS Principal (Modular) */
+
+/* Base styles */
+@import url('./base/variables.css');
+@import url('./base/reset.css');
+@import url('./base/typography.css');
+
+/* Components */
+@import url('./components/sidebar.css');
+@import url('./components/profile.css');
+@import url('./components/buttons.css');
+@import url('./components/sliders.css');
+@import url('./components/dragdrop.css');
+@import url('./components/dropdowns.css');
+
+/* Screens */
+@import url('./screens/apps.css');
+@import url('./screens/channels.css');
+@import url('./screens/devices.css');
+
+/* Responsividade global */
+@media (max-width: 1200px) {
+    .sidebar {
+        width: 240px;
+    }
+
+    .main-content {
+        padding: 24px;
+    }
+
+    .content-header .title {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .main-content {
+        padding: 16px;
+    }
+
+    .audio-card {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .audio-card .app-name {
+        flex-basis: auto;
+        margin-bottom: 8px;
+    }
+
+    .audio-card .volume-control {
+        width: 100%;
+    }
+
+    #master-volume-container {
+        flex-direction: column;
+        gap: 12px;
+    }
+}
+
+/* Melhorias de acessibilidade */
+.mute-btn:focus,
+.solo-btn:focus,
+.form-range:focus {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+}
+
+/* Efeito de glassmorphism */
+.sidebar,
+.audio-card,
+#master-volume-container,
+.channel-card,
+.device-card {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}

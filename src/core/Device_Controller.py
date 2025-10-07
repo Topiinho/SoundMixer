@@ -1,9 +1,13 @@
 from pycaw.pycaw import AudioUtilities
 import subprocess
+from typing import List, Dict, Any
+from ..utils.logger import setup_logger
+
+logger = setup_logger(__name__)
 
 class Devices_Services:
     @staticmethod
-    def get_output_devices():
+    def get_output_devices() -> List[Dict[str, Any]]:
         try:
             devices_enum = AudioUtilities.GetDeviceEnumerator()
             devices = devices_enum.EnumAudioEndpoints(0, 1)
@@ -29,17 +33,16 @@ class Devices_Services:
                         })
                     
                     except Exception as e:
-                        print(e)
+                        logger.error(f"Erro ao processar dispositivo de saída: {e}")
             
             return output_devices
         
         except Exception as e:
-            print(f"Erro ao obter dispositivos de saída: {e}")
-            return []
+            logger.error(f"Erro ao obter dispositivos de saída: {e}")
         
 
     @staticmethod
-    def get_input_devices():
+    def get_input_devices() -> List[Dict[str, Any]]:
         try:
             devices_enum = AudioUtilities.GetDeviceEnumerator()
             devices = devices_enum.EnumAudioEndpoints(1, 1)
@@ -65,15 +68,15 @@ class Devices_Services:
                         })
                     
                     except Exception as e:
-                        print(e)
+                        logger.error(f"Erro ao processar dispositivo de saída: {e}")
             
             return input_devices
         
         except Exception as e:
-            print(f"Erro ao obter dispositivos de entrada: {e}")
-            return []
+            logger.error(f"Erro ao obter dispositivos de entrada: {e}")
         
-    def set_output_device(device_id):
+    @staticmethod
+    def set_output_device(device_id: str) -> bool:
         try:
             script = f'''
             Import-Module AudioDeviceCmdLets -Force
@@ -85,12 +88,14 @@ class Devices_Services:
             ], capture_output=True, text=True, timeout=5)
 
             return result.returncode == 0
-        
+
+        except subprocess.TimeoutExpired:
+            logger.error("Timeout ao executar script PowerShell para dispositivo de saída")
         except Exception as e:
-            print(e)
-            return False
-        
-    def set_input_device(device_id):
+            logger.error(f"Erro ao definir dispositivo de saída: {e}")
+
+    @staticmethod
+    def set_input_device(device_id: str) -> bool:
         try:
             script = f'''
             Import-Module AudioDeviceCmdlets -Force
@@ -103,24 +108,17 @@ class Devices_Services:
 
             return result.returncode == 0
 
+        except subprocess.TimeoutExpired:
+            logger.error("Timeout ao executar script PowerShell para dispositivo de entrada")
         except Exception as e:
-            print(e)
-            return False
+            logger.error(f"Erro ao definir dispositivo de entrada: {e}")
 
 
 
 
-
-
-
-
-
-
-# ===========================================================================
 
     @staticmethod
-    def get_all_devices():
-        """Retorna dispositivos separados por tipo"""
+    def get_all_devices() -> Dict[str, List[Dict[str, Any]]]:
         return {
             'output_devices': Devices_Services.get_output_devices(),
             'input_devices': Devices_Services.get_input_devices()
@@ -128,34 +126,52 @@ class Devices_Services:
 
 
     @staticmethod
-    def print_devices():
-        """Imprime todos os dispositivos de forma organizada"""
+    def print_devices() -> None:
         devices = Devices_Services.get_all_devices()
 
-        print("=== DISPOSITIVOS DE SAÍDA ATIVOS ===")
+        logger.info("=== DISPOSITIVOS DE SAÍDA ATIVOS ===")
         for device in devices['output_devices']:
-            print(f"Nome: {device['name']}")
-            print(f"ID: {device['id']}")
-            print(f"Tipo: {device['type']}")
-            print("-" * 50)
+            logger.info(f"Nome: {device['name']}")
+            logger.info(f"ID: {device['id']}")
+            logger.info(f"Tipo: {device['type']}")
+            logger.info("-" * 50)
 
-        print("\n=== DISPOSITIVOS DE ENTRADA ATIVOS ===")
+        logger.info("\n=== DISPOSITIVOS DE ENTRADA ATIVOS ===")
         for device in devices['input_devices']:
-            print(f"Nome: {device['name']}")
-            print(f"ID: {device['id']}")
-            print(f"Tipo: {device['type']}")
-            print("-" * 50)
+            logger.info(f"Nome: {device['name']}")
+            logger.info(f"ID: {device['id']}")
+            logger.info(f"Tipo: {device['type']}")
+            logger.info("-" * 50)
+
+
+
+
+
+# ===========================================================================
+
 
 def main():
-    service = Devices_Services()
-    service.print_devices()
+    logger.info("🔊 === DEMONSTRAÇÃO: GERENCIAMENTO DE DISPOSITIVOS ===")
 
-    # Exemplo de como usar as funções separadamente
-    output_devices = service.get_output_devices()
-    input_devices = service.get_input_devices()
+    try:
+        service = Devices_Services()
 
-    print(f"\nTotal de dispositivos de saída ativos: {len(output_devices)}")
-    print(f"Total de dispositivos de entrada ativos: {len(input_devices)}")
+        output_devices = service.get_output_devices()
+        input_devices = service.get_input_devices()
+
+        logger.info(f"📊 Estatísticas:")
+        logger.info(f"   🔊 Dispositivos de Saída: {len(output_devices)}")
+        logger.info(f"   🎤 Dispositivos de Entrada: {len(input_devices)}")
+        logger.info("")
+
+        service.print_devices()
+
+        logger.info("\n✅ Demonstração concluída com sucesso!")
+        logger.info("💡 Para alterar dispositivos, use os métodos set_output_device() e set_input_device()")
+
+    except Exception as e:
+        logger.error(f"❌ Erro na demonstração: {e}")
+
 
 if __name__ == "__main__":
     main()

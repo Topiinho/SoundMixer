@@ -1,0 +1,172 @@
+/* Componentes de Botões */
+
+/* Botão Mute */
+.mute-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    z-index: 2;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.mute-btn:hover {
+    background: var(--accent-gradient);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: var(--shadow-sm);
+}
+
+.mute-btn:active {
+    transform: scale(0.95);
+}
+
+/* Botão Solo */
+.solo-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    z-index: 2;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.solo-btn:hover {
+    background: var(--solo-gradient);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: var(--shadow-sm);
+}
+
+.solo-btn:active {
+    transform: scale(0.95);
+}
+
+/* Estados especiais dos botões */
+.header-volume-controls .mute-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+/* Botão de criação discreto */
+.create-channel-btn-discrete {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.create-channel-btn-discrete:hover {
+    background: var(--accent-gradient);
+    color: white;
+    border-color: var(--accent-primary);
+    transform: scale(1.05);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Botões de seção */
+.add-channel-section-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px dashed var(--border-color);
+    color: var(--text-muted);
+    padding: 16px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    width: 100%;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.add-channel-section-btn:hover {
+    background: var(--interactive-hover);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+/* Botão de remover */
+.remove-channel-btn {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-channel-btn:hover {
+    background: #ef4444;
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Botões de seleção de dispositivos */
+.select-device-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+}
+
+.select-device-btn:hover {
+    background: var(--accent-gradient);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: var(--shadow-sm);
+}
+
+.select-device-btn.btn-success {
+    background: var(--accent-gradient);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+.select-device-btn.btn-outline {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--border-color);
+}

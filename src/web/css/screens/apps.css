@@ -1,0 +1,170 @@
+/* Tela de Controle por Apps */
+
+.main-content {
+    flex-grow: 1;
+    padding: 32px;
+    background: transparent;
+    overflow-y: auto;
+    position: relative;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    position: relative;
+}
+
+.content-header::after {
+    content: '';
+    position: absolute;
+    bottom: -16px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-primary), transparent);
+}
+
+/* Master volume container */
+#master-volume-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--card-background);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    padding: 20px 24px;
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+#master-volume-container:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-primary);
+}
+
+#master-volume-container .volume-control {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+#master-volume-container .master-label {
+    font-weight: 600;
+    color: var(--accent-primary);
+    font-size: 16px;
+    min-width: 60px;
+}
+
+/* Cards de aplicativos */
+.audio-card {
+    background: var(--card-background);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    padding: 24px 28px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.audio-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.5s;
+}
+
+.audio-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-primary);
+}
+
+.audio-card:hover::before {
+    left: 100%;
+}
+
+.app-name {
+    flex-basis: 200px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--text-primary);
+    z-index: 2;
+    position: relative;
+}
+
+.app-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+    border-radius: 8px;
+    z-index: 2;
+    position: relative;
+}
+
+.app-icon-placeholder {
+    width: 32px;
+    height: 32px;
+    margin-right: 16px;
+    background: var(--accent-gradient);
+    border-radius: 8px;
+    z-index: 2;
+    position: relative;
+}
+
+/* Estados especiais dos apps */
+.audio-card.solo-active {
+    border: 2px solid var(--solo-color);
+    background: linear-gradient(145deg, rgba(251,191,36,0.1) 0%, rgba(0,0,0,0.4) 100%);
+}
+
+.audio-card.solo-active .solo-btn {
+    background: var(--solo-gradient);
+    color: white;
+    border-color: var(--solo-color);
+}
+
+.audio-card.solo-active .app-name {
+    color: var(--solo-color);
+}
+
+/* Animações - apenas no carregamento inicial */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Classe especial para animação inicial */
+.initial-load .audio-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.initial-load .audio-card:nth-child(1) { animation-delay: 0.1s; }
+.initial-load .audio-card:nth-child(2) { animation-delay: 0.2s; }
+.initial-load .audio-card:nth-child(3) { animation-delay: 0.3s; }
+.initial-load .audio-card:nth-child(4) { animation-delay: 0.4s; }
+.initial-load .audio-card:nth-child(5) { animation-delay: 0.5s; }

@@ -6,6 +6,18 @@ O **Sonus Mixer** é um mixer de áudio profissional para Windows, com interface
 
 ---
 
+## 🚀 Execução Rápida
+
+```bash
+# Windows
+cd C:\Users\alcan\Downloads\0-Code\SoundMixer
+python main.py
+```
+
+> 📖 **Para instruções detalhadas, consulte:** [`COMO_EXECUTAR.md`](COMO_EXECUTAR.md)
+
+---
+
 ## 🎯 Objetivos do Projeto
 
 ### Objetivo Principal

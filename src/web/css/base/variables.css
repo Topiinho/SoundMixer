@@ -1,0 +1,35 @@
+/* Variáveis CSS Globais - Tema Azul e Preto Suave */
+:root {
+    /* Cores de background */
+    --background-primary: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f172a 100%);
+    --background-secondary: rgba(30, 58, 138, 0.08);
+    --background-tertiary: rgba(30, 58, 138, 0.12);
+    --card-background: linear-gradient(145deg, rgba(30,58,138,0.06) 0%, rgba(0,0,0,0.4) 100%);
+
+    /* Cores de texto */
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #64748b;
+
+    /* Cores de acento */
+    --accent-primary: #2563eb;
+    --accent-secondary: #1d4ed8;
+    --accent-gradient: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    --accent-muted: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+
+    /* Estados interativos */
+    --interactive-hover: rgba(37, 99, 235, 0.1);
+    --interactive-active: rgba(37, 99, 235, 0.2);
+
+    /* Bordas e sombras */
+    --border-color: rgba(30, 58, 138, 0.2);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+    /* Cores específicas para funcionalidades */
+    --solo-color: #fbbf24;
+    --solo-gradient: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    --mute-color: #ef4444;
+    --success-color: #10b981;
+}

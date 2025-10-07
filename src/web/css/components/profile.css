@@ -1,0 +1,166 @@
+/* Componente Profile Card */
+
+.profile-section {
+    margin-top: auto;
+    position: relative;
+}
+
+.profile-card {
+    background: var(--background-tertiary);
+    border: 1px solid var(--border-color);
+    padding: 16px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.profile-card:hover {
+    background: var(--interactive-hover);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.profile-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-primary);
+    object-fit: cover;
+}
+
+.profile-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.profile-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.profile-status {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.profile-menu-btn {
+    color: var(--text-muted);
+    transition: all 0.3s ease;
+}
+
+.profile-popup.show + .profile-card .profile-menu-btn,
+.profile-card.popup-open .profile-menu-btn {
+    color: var(--accent-primary);
+    transform: rotate(180deg);
+}
+
+/* Popup do perfil */
+.profile-popup {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background: #1a1a2e;
+    border: 1px solid var(--accent-primary);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+    padding: 16px;
+    margin-bottom: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+}
+
+.profile-popup.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.popup-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 4px;
+}
+
+.popup-option:hover {
+    background: var(--interactive-hover);
+}
+
+.popup-option i:first-child {
+    color: var(--accent-primary);
+    width: 16px;
+    text-align: center;
+}
+
+.popup-option span {
+    flex-grow: 1;
+    font-weight: 500;
+    color: var(--text-primary);
+    font-size: 14px;
+}
+
+.popup-option i:last-child {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* Toggle switch */
+.toggle-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-switch label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--border-color);
+    border-radius: 24px;
+    transition: all 0.3s ease;
+}
+
+.toggle-switch label:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.toggle-switch input:checked + label {
+    background: var(--accent-gradient);
+}
+
+.toggle-switch input:checked + label:before {
+    transform: translateX(20px);
+}
