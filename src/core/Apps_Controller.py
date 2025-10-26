@@ -8,10 +8,6 @@ from PIL import Image, ImageWin
 import io
 import base64
 from typing import List, Dict, Any, Optional
-from ..utils.logger import setup_logger
-
-
-logger = setup_logger(__name__)
 
 def get_icon_as_base64(pid: int) -> Optional[str]:
     try:
@@ -52,7 +48,7 @@ def get_icon_as_base64(pid: int) -> Optional[str]:
         return f"data:image/png;base64,{encoded_string}"
 
     except Exception as e:
-        logger.debug(f"Erro ao obter ícone para PID {pid}: {e}")
+        print(f"Erro ao obter ícone para PID {pid}: {e}")
         return None
     finally:
         if 'hicon' in locals() and hicon:
@@ -63,22 +59,20 @@ class Apps_Service:
     def get_all_apps() -> List[Dict[str, Any]]:
         apps = []
         seen_apps = set()
-        
         sessions = AudioUtilities.GetAllSessions()
 
         for session in sessions:
             if session.Process and session.Process.name():
-
                 app_name = session.Process.name().replace('.exe', '')
 
                 if app_name not in seen_apps and "svchost" not in app_name:
                     seen_apps.add(app_name)
                     pid = session.Process.pid
-                    
+
                     volume_interface = session.SimpleAudioVolume
                     current_volume = round(volume_interface.GetMasterVolume() * 100)
                     is_muted = volume_interface.GetMute()
-                    
+
                     apps.append({
                         'name': app_name,
                         'pid': pid,
@@ -88,32 +82,11 @@ class Apps_Service:
                     })
         return apps
 
-
 def main():
-    logger.info("🎵 === DEMONSTRAÇÃO: DETECÇÃO DE APLICAÇÕES ===")
-
-    try:
-        apps = Apps_Service.get_all_apps()
-
-        if not apps:
-            logger.info("ℹ️  Nenhuma aplicação com áudio ativo encontrada.")
-            logger.info("💡 Execute um player de música ou vídeo e tente novamente.")
-        else:
-            logger.info(f"🔍 Encontradas {len(apps)} aplicação(ões) com áudio ativo:")
-
-            for i, app in enumerate(apps, 1):
-                logger.info(f"  {i}. {app['name']}")
-                logger.info(f"     📊 Volume: {app['volume']}%")
-                logger.info(f"     🔇 Mutado: {'Sim' if app['is_muted'] else 'Não'}")
-                logger.info(f"     🆔 PID: {app['pid']}")
-                if app['icon']:
-                    logger.info(f"     🖼️  Ícone: Presente")
-                logger.info("     " + "-" * 30)
-
-    except Exception as e:
-        logger.error(f"❌ Erro na demonstração: {e}")
-
+    appss = Apps_Service()
+    apps = appss.get_all_apps()
+    for app in apps:
+        print(app)
 
 if __name__ == "__main__":
     main()
-

@@ -1,11 +1,8 @@
-/* Cliente de APIs Mock */
-
 class APIClient {
     constructor(stateManager) {
         this.state = stateManager;
     }
 
-    // APIs de aplicativos
     async getAudioApps() {
         const apps = Object.entries(this.state.state.apps).map(([name, state]) => ({
             name,
@@ -39,19 +36,16 @@ class APIClient {
         if (!currentState) return Promise.resolve(false);
 
         if (this.state.state.solo.currentApp === appName) {
-            // Desativar solo
             this.state.deactivateSolo('app');
             console.log(`Mock: Solo DESATIVADO de ${appName}`);
             return Promise.resolve(false);
         } else {
-            // Ativar solo
             this.state.activateSolo('app', appName);
             console.log(`Mock: Solo ATIVADO em ${appName}`);
             return Promise.resolve(true);
         }
     }
 
-    // APIs de master volume
     async getMasterState() {
         return Promise.resolve(this.state.getMasterState());
     }
@@ -70,7 +64,6 @@ class APIClient {
         return Promise.resolve(newMuteState);
     }
 
-    // APIs de dispositivos
     async getAudioDevices() {
         return Promise.resolve(this.state.getDevices());
     }
@@ -106,7 +99,6 @@ class APIClient {
         return Promise.resolve(false);
     }
 
-    // APIs de canais
     async getAudioChannels() {
         return Promise.resolve({
             output_channels: this.state.state.channels.output,
@@ -146,17 +138,14 @@ class APIClient {
         if (!channel) return Promise.resolve(false);
 
         if (this.state.state.solo.currentChannel === channelId) {
-            // Desativar solo usando StateManager
             this.state.deactivateSolo('channel', channelId);
             console.log(`Mock: Solo DESATIVADO da faixa ${channel.name}`);
             return Promise.resolve(false);
         } else {
-            // Desativar solo anterior se existir
             if (this.state.state.solo.currentChannel) {
                 this.state.deactivateSolo('channel', this.state.state.solo.currentChannel);
             }
 
-            // Ativar novo solo usando StateManager
             this.state.activateSolo('channel', channelId);
             console.log(`Mock: Solo ATIVADO na faixa ${channel.name}`);
             return Promise.resolve(true);

@@ -1,5 +1,3 @@
-/* Gerenciador de Estado Centralizado */
-
 class StateManager {
     constructor() {
         this.state = {
@@ -50,7 +48,6 @@ class StateManager {
         this.channelIdCounter = 5;
     }
 
-    // Getters seguros
     getAppState(appName) {
         return this.state.apps[appName] || null;
     }
@@ -73,7 +70,6 @@ class StateManager {
         };
     }
 
-    // Setters com validação
     updateAppState(appName, updates) {
         if (this.state.apps[appName]) {
             this.state.apps[appName] = { ...this.state.apps[appName], ...updates };
@@ -96,11 +92,9 @@ class StateManager {
         }
     }
 
-    // Sistema de solo
     activateSolo(type, id) {
         if (type === 'app') {
             this.state.solo.currentApp = id;
-            // Mutar outros apps
             Object.keys(this.state.apps).forEach(app => {
                 if (app !== id) {
                     this.state.apps[app].is_muted = true;
@@ -112,14 +106,12 @@ class StateManager {
         } else if (type === 'channel') {
             this.state.solo.currentChannel = id;
 
-            // Encontrar o canal
             const allChannels = [...this.state.channels.output, ...this.state.channels.input];
             const channel = allChannels.find(c => c.id === id);
 
             if (channel) {
                 channel.is_solo = true;
 
-                // Mutar outros canais do mesmo tipo
                 const channelsOfSameType = channel.type === 'input' ?
                     this.state.channels.input :
                     this.state.channels.output;
@@ -128,7 +120,7 @@ class StateManager {
                     if (ch.id !== id) {
                         ch.is_muted = true;
                     } else {
-                        ch.is_muted = false; // Garantir que canal solo não está mudo
+                        ch.is_muted = false;
                     }
                 });
             }
@@ -149,14 +141,12 @@ class StateManager {
         } else if (type === 'channel') {
             this.state.solo.currentChannel = null;
 
-            // Encontrar o canal
             const allChannels = [...this.state.channels.output, ...this.state.channels.input];
             const channel = allChannels.find(c => c.id === id);
 
             if (channel) {
                 channel.is_solo = false;
 
-                // Restaurar outros canais do mesmo tipo
                 const channelsOfSameType = channel.type === 'input' ?
                     this.state.channels.input :
                     this.state.channels.output;
@@ -170,7 +160,6 @@ class StateManager {
         this.notifyListeners('solo-deactivated', { type, id });
     }
 
-    // Sistema de observação
     subscribe(listener) {
         this.listeners.add(listener);
         return () => this.listeners.delete(listener);
@@ -185,7 +174,6 @@ class StateManager {
             }
         });
     }
-
 }
 
 export default StateManager;

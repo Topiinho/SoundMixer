@@ -1,3 +1,28 @@
 __pycache__
 pycaw
 test.py
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code
+CLAUDE.md
+.claude/
