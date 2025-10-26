@@ -23,7 +23,7 @@ class Apps_Volume_Controller:
 
     def toggle_mute(self) -> Optional[bool]:
         if self.session:
-            self.interface.SetMute(not interface.GetMute(), None)
+            self.interface.SetMute(not self.interface.GetMute(), None)
 
             is_muted = self.interface.GetMute()
             status = "mutado" if is_muted else "desmutado"
@@ -32,6 +32,12 @@ class Apps_Volume_Controller:
         else:
             print(f"Não foi possível alternar o mudo. Processo '{self.process_name}' não encontrado.")
             return None
+
+    def set_mute(self, mute_state: bool) -> None:
+        if self.session:
+            self.interface.SetMute(mute_state, None)
+        else:
+            print(f"Não foi possível definir mute. Processo '{self.process_name}' não encontrado.")
 
     def set_volume(self, level: float) -> None:
         if not (0 <= level <= 100):
@@ -53,8 +59,9 @@ class Apps_Volume_Controller:
 
 class Master_Volume_Controller:
     def __init__(self) -> None:
-        self.speakers = AudioUtilities.GetSpeakers()
-        self.controller = self.volume_control()
+        devices = AudioUtilities.GetSpeakers()
+        interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+        self.controller = cast(interface, POINTER(IAudioEndpointVolume))
         self.volume = self._get_volume()
 
     def get_state(self) -> Dict[str, Any]:
@@ -62,11 +69,6 @@ class Master_Volume_Controller:
             'volume': self._get_volume(),
             'is_muted': self.controller.GetMute()
         }
-
-    def volume_control(self) -> Any:
-        interface = self.speakers.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-        volume_control = cast(interface, POINTER(IAudioEndpointVolume))
-        return volume_control
 
     def _get_volume(self) -> int:
         volume = int(self.controller.GetMasterVolumeLevelScalar() * 100)

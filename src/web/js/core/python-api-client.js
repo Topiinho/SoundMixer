@@ -50,7 +50,7 @@ class PythonAPIClient {
                     name: app.name,
                     volume: app.volume || 50,
                     is_muted: app.is_muted || false,
-                    is_solo: false, // Funcionalidade não implementada no backend
+                    is_solo: app.is_solo || false,
                     icon: app.icon || null,
                     pid: app.pid
                 }));
@@ -109,20 +109,24 @@ class PythonAPIClient {
     }
 
     async toggleAppSolo(appName) {
-        // Funcionalidade solo não implementada no backend Python
-        // Usar implementação mock por enquanto
         try {
-            const currentState = this.state.getAppState(appName);
-            if (!currentState) return false;
-
-            if (this.state.state.solo.currentApp === appName) {
-                this.state.deactivateSolo('app');
-                console.log(`⭐ Solo DESATIVADO de ${appName}`);
-                return false;
+            if (window.pywebview && window.pywebview.api) {
+                const isSolo = await window.pywebview.api.toggle_app_solo(appName);
+                console.log(`⭐ ${appName} ${isSolo ? 'SOLO ATIVADO' : 'SOLO DESATIVADO'}`);
+                return isSolo;
             } else {
-                this.state.activateSolo('app', appName);
-                console.log(`⭐ Solo ATIVADO em ${appName}`);
-                return true;
+                const currentState = this.state.getAppState(appName);
+                if (!currentState) return false;
+
+                if (this.state.state.solo.currentApp === appName) {
+                    this.state.deactivateSolo('app');
+                    console.log(`⭐ Solo DESATIVADO de ${appName}`);
+                    return false;
+                } else {
+                    this.state.activateSolo('app', appName);
+                    console.log(`⭐ Solo ATIVADO em ${appName}`);
+                    return true;
+                }
             }
         } catch (error) {
             console.error(`❌ Erro ao alternar solo do ${appName}:`, error);
@@ -248,12 +252,15 @@ class PythonAPIClient {
 
     async setDeviceVolume(deviceId, deviceType, volume) {
         try {
-            // Volume de dispositivos não implementado no backend Python
-            console.log(`🔧 Mock: Volume do dispositivo ${deviceId} definido para ${volume}%`);
-
-            const device = this.state.state.devices[deviceType]?.find(d => d.id === deviceId);
-            if (device) {
-                device.volume = volume;
+            if (window.pywebview && window.pywebview.api) {
+                await window.pywebview.api.set_device_volume(deviceId, deviceType, volume);
+                console.log(`🔊 Volume do dispositivo ${deviceId} definido para ${volume}%`);
+            } else {
+                console.log(`🔧 Mock: Volume do dispositivo ${deviceId} definido para ${volume}%`);
+                const device = this.state.state.devices[deviceType]?.find(d => d.id === deviceId);
+                if (device) {
+                    device.volume = volume;
+                }
             }
         } catch (error) {
             console.error(`❌ Erro ao definir volume do dispositivo ${deviceId}:`, error);
@@ -262,14 +269,19 @@ class PythonAPIClient {
 
     async toggleDeviceMute(deviceId, deviceType) {
         try {
-            // Mute de dispositivos não implementado no backend Python
-            const device = this.state.state.devices[deviceType]?.find(d => d.id === deviceId);
-            if (device) {
-                device.is_muted = !device.is_muted;
-                console.log(`🔧 Mock: Dispositivo ${deviceId} ${device.is_muted ? 'MUTADO' : 'DESMUTADO'}`);
-                return device.is_muted;
+            if (window.pywebview && window.pywebview.api) {
+                const isMuted = await window.pywebview.api.toggle_device_mute(deviceId, deviceType);
+                console.log(`🔇 Dispositivo ${deviceId} ${isMuted ? 'MUTADO' : 'DESMUTADO'}`);
+                return isMuted;
+            } else {
+                const device = this.state.state.devices[deviceType]?.find(d => d.id === deviceId);
+                if (device) {
+                    device.is_muted = !device.is_muted;
+                    console.log(`🔧 Mock: Dispositivo ${deviceId} ${device.is_muted ? 'MUTADO' : 'DESMUTADO'}`);
+                    return device.is_muted;
+                }
+                return false;
             }
-            return false;
         } catch (error) {
             console.error(`❌ Erro ao alternar mute do dispositivo ${deviceId}:`, error);
             return false;
