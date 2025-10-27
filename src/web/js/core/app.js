@@ -284,6 +284,9 @@ class SoundMixerApp {
                 case 'devices':
                     await this.showDevicesScreen();
                     break;
+                case 'routing':
+                    await this.showRoutingScreen();
+                    break;
                 default:
                     console.warn(`Tela desconhecida: ${screenName}`);
             }
@@ -1270,6 +1273,144 @@ class SoundMixerApp {
                 }
             }
         }
+    }
+
+    async showRoutingScreen() {
+        const header = document.querySelector('.content-header h1');
+        const masterContainer = document.getElementById('master-volume-container');
+
+        if (header) {
+            header.innerHTML = '<i class="fas fa-route me-2"></i>Roteamento de Áudio Virtual';
+        }
+
+        if (masterContainer) {
+            masterContainer.style.display = 'none';
+        }
+
+        const apps = await this.apiClient.getAudioApps();
+        const cables = await this.apiClient.getVirtualCables();
+
+        this.renderRoutingScreen(apps, cables);
+    }
+
+    renderRoutingScreen(apps, cables) {
+        const contentBody = document.querySelector('.content-body');
+        if (!contentBody) return;
+
+        const hasVirtualCables = cables.output.length > 0 || cables.input.length > 0;
+
+        if (!hasVirtualCables) {
+            contentBody.innerHTML = `
+                <div class="routing-empty-state">
+                    <i class="fas fa-plug" style="font-size: 4rem; color: #6b7280; margin-bottom: 1rem;"></i>
+                    <h3>Nenhum Cabo Virtual Detectado</h3>
+                    <p>Para usar o roteamento de áudio, você precisa instalar um software de cabo virtual como:</p>
+                    <ul style="text-align: left; margin: 1.5rem auto; max-width: 500px;">
+                        <li><strong>VB-Audio Virtual Cable</strong> - Gratuito</li>
+                        <li><strong>Voicemeeter</strong> - Mixer de áudio virtual</li>
+                        <li><strong>Virtual Audio Cable (VAC)</strong> - Pago</li>
+                    </ul>
+                    <a href="https://vb-audio.com/Cable/" target="_blank" class="btn btn-primary" style="margin-top: 1rem;">
+                        <i class="fas fa-download"></i> Baixar VB-Audio Cable
+                    </a>
+                </div>
+            `;
+            return;
+        }
+
+        const routingHTML = `
+            <div class="routing-container">
+                <div class="routing-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Rotear aplicativos para cabos virtuais permite controle avançado de áudio</span>
+                </div>
+
+                <div class="routing-apps-section">
+                    <h3><i class="fas fa-sliders"></i> Aplicativos com Áudio</h3>
+                    <div class="routing-apps-list">
+                        ${apps.map(app => this.createRoutingAppCard(app, cables)).join('')}
+                    </div>
+                </div>
+
+                <div class="routing-cables-section">
+                    <h3><i class="fas fa-plug"></i> Cabos Virtuais Disponíveis</h3>
+                    <div class="routing-cables-grid">
+                        ${cables.output.map(cable => `
+                            <div class="routing-cable-card">
+                                <i class="fas fa-arrow-right"></i>
+                                <span class="cable-name">${cable.name}</span>
+                                <span class="cable-type">Saída</span>
+                            </div>
+                        `).join('')}
+                        ${cables.input.map(cable => `
+                            <div class="routing-cable-card">
+                                <i class="fas fa-arrow-left"></i>
+                                <span class="cable-name">${cable.name}</span>
+                                <span class="cable-type">Entrada</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        contentBody.innerHTML = routingHTML;
+        this.setupRoutingEventListeners(cables);
+    }
+
+    createRoutingAppCard(app, cables) {
+        return `
+            <div class="routing-app-card" data-app-name="${app.name}">
+                <div class="routing-app-info">
+                    <div class="app-icon-placeholder"></div>
+                    <span class="app-name">${app.name}</span>
+                </div>
+                <div class="routing-app-controls">
+                    <select class="routing-device-select" data-app-name="${app.name}">
+                        <option value="default">Dispositivo Padrão</option>
+                        ${cables.output.map(cable => `
+                            <option value="${cable.id}">${cable.name}</option>
+                        `).join('')}
+                    </select>
+                    <button class="btn-route" data-app-name="${app.name}" title="Aplicar Roteamento">
+                        <i class="fas fa-check"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    setupRoutingEventListeners(cables) {
+        const contentBody = document.querySelector('.content-body');
+
+        const routeHandler = async (e) => {
+            if (e.target.closest('.btn-route')) {
+                const btn = e.target.closest('.btn-route');
+                const appName = btn.dataset.appName;
+                const select = document.querySelector(`.routing-device-select[data-app-name="${appName}"]`);
+                const deviceId = select.value;
+
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+                if (deviceId === 'default') {
+                    await this.apiClient.resetAppRouting(appName);
+                } else {
+                    await this.apiClient.routeAppToDevice(appName, deviceId);
+                }
+
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+
+                setTimeout(() => {
+                    btn.classList.add('success-flash');
+                    setTimeout(() => btn.classList.remove('success-flash'), 1000);
+                }, 100);
+            }
+        };
+
+        contentBody.addEventListener('click', routeHandler);
+        contentBody.__routingHandler = routeHandler;
     }
 
     // Utility methods

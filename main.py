@@ -4,6 +4,7 @@ from src.web.Screem import Window_Service
 from src.core.Apps_Controller import Apps_Service
 from src.core.Volume_Controller import Apps_Volume_Controller, Master_Volume_Controller
 from src.core.Device_Controller import Devices_Services
+from src.core.Virtual_Cable_Controller import Virtual_Cable_Service
 from audio_channel import ChannelManager
 
 class Api:
@@ -207,6 +208,37 @@ class Api:
             return False
         except Exception as e:
             print(f"Erro ao remover app do canal: {e}")
+            return False
+
+    def get_virtual_cables(self) -> Dict[str, List[Dict[str, Any]]]:
+        try:
+            return Virtual_Cable_Service.get_virtual_cables()
+        except Exception as e:
+            print(f"Erro ao obter cabos virtuais: {e}")
+            return {'output': [], 'input': []}
+
+    def route_app_to_device(self, app_name: str, device_id: str) -> bool:
+        try:
+            success = Virtual_Cable_Service.route_app_to_device(app_name, device_id)
+            if success:
+                print(f"App '{app_name}' roteado para dispositivo '{device_id}'")
+            return success
+        except Exception as e:
+            print(f"Erro ao rotear app '{app_name}': {e}")
+            return False
+
+    def get_app_routing(self, app_name: str) -> Optional[Dict[str, Any]]:
+        try:
+            return Virtual_Cable_Service.get_app_routing(app_name)
+        except Exception as e:
+            print(f"Erro ao obter roteamento do app '{app_name}': {e}")
+            return None
+
+    def reset_app_routing(self, app_name: str) -> bool:
+        try:
+            return Virtual_Cable_Service.reset_app_routing(app_name)
+        except Exception as e:
+            print(f"Erro ao resetar roteamento do app '{app_name}': {e}")
             return False
 
 def main() -> None:

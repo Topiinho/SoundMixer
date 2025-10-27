@@ -46,7 +46,8 @@ SoundMixer/
 * [ OK ] Sistema de Canais (criar, deletar, volume, mute, solo)
 * [ OK ] Associação de apps com canais
 * [ OK ] Implementar Solo por aplicação
-* [ ] Suporte a Virtual Audio Cables (roteamento básico)
+* [ OK ] Suporte a Virtual Audio Cables (roteamento básico)
+* [ OK ] Controle de volume e mute de dispositivos
 * [ ] Adicionar VU Meters (níveis de áudio em tempo real)
 * [ ] Criar Spectrum Analyzer simples
 

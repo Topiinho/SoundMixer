@@ -369,6 +369,77 @@ class PythonAPIClient {
         this.mockData.channels.output = this.mockData.channels.output.filter(c => c.id !== channelId);
         this.mockData.channels.input = this.mockData.channels.input.filter(c => c.id !== channelId);
     }
+
+    async getVirtualCables() {
+        try {
+            if (window.pywebview && window.pywebview.api) {
+                const cables = await window.pywebview.api.get_virtual_cables();
+                console.log('🎛️ Cabos virtuais obtidos:', cables);
+                return cables;
+            } else {
+                console.log('🔧 Mock: Usando dados mock para cabos virtuais');
+                return {
+                    output: [
+                        { id: 'vb-cable-1', name: 'CABLE Input (VB-Audio Virtual Cable)', type: 'output', is_virtual: true }
+                    ],
+                    input: [
+                        { id: 'vb-cable-2', name: 'CABLE Output (VB-Audio Virtual Cable)', type: 'input', is_virtual: true }
+                    ]
+                };
+            }
+        } catch (error) {
+            console.error('❌ Erro ao obter cabos virtuais:', error);
+            return { output: [], input: [] };
+        }
+    }
+
+    async routeAppToDevice(appName, deviceId) {
+        try {
+            if (window.pywebview && window.pywebview.api) {
+                const success = await window.pywebview.api.route_app_to_device(appName, deviceId);
+                console.log(`🔀 App ${appName} ${success ? 'roteado' : 'falhou ao rotear'} para dispositivo ${deviceId}`);
+                return success;
+            } else {
+                console.log(`🔧 Mock: Roteando ${appName} para ${deviceId}`);
+                return true;
+            }
+        } catch (error) {
+            console.error(`❌ Erro ao rotear app ${appName}:`, error);
+            return false;
+        }
+    }
+
+    async getAppRouting(appName) {
+        try {
+            if (window.pywebview && window.pywebview.api) {
+                const routing = await window.pywebview.api.get_app_routing(appName);
+                console.log(`🔍 Roteamento de ${appName}:`, routing);
+                return routing;
+            } else {
+                console.log(`🔧 Mock: Obtendo roteamento de ${appName}`);
+                return { app_name: appName, device_id: 'default', device_name: 'Dispositivo Padrão' };
+            }
+        } catch (error) {
+            console.error(`❌ Erro ao obter roteamento de ${appName}:`, error);
+            return null;
+        }
+    }
+
+    async resetAppRouting(appName) {
+        try {
+            if (window.pywebview && window.pywebview.api) {
+                const success = await window.pywebview.api.reset_app_routing(appName);
+                console.log(`🔄 Roteamento de ${appName} ${success ? 'resetado' : 'falhou ao resetar'}`);
+                return success;
+            } else {
+                console.log(`🔧 Mock: Resetando roteamento de ${appName}`);
+                return true;
+            }
+        } catch (error) {
+            console.error(`❌ Erro ao resetar roteamento de ${appName}:`, error);
+            return false;
+        }
+    }
 }
 
 export default PythonAPIClient;
