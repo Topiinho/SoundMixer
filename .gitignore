@@ -1,28 +1,321 @@
-__pycache__
-pycaw
-test.py
+# .NET / C# / WinUI 3 - SoundMixer .gitignore
 
-# IDEs
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-
-# Python
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-ENV/
-.venv
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Claude Code
-CLAUDE.md
+## Claude Code
 .claude/
+claude.md
+
+## Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## Visual Studio cache/options
+.vs/
+.vscode/
+
+## Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+## User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## Mono Auto Generated Files
+mono_crash.*
+
+## Build Results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## StyleCop
+StyleCopReport.xml
+
+## Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+## Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+## Visual Studio cache files
+# files ending in .cache can be ignored
+*.[Cc]ache
+# but keep track of directories ending in .cache
+!?*.[Cc]ache/
+
+## Backup & report files from converting an old project
+_UpgradeReport_Files/
+Backup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+ServiceFabricBackup/
+*.rptproj.bak
+
+## SQL Server files
+*.mdf
+*.ldf
+*.ndf
+
+## Business Intelligence projects
+*.rdl.data
+*.bim.layout
+*.bim_*.settings
+*.rptproj.rsuser
+*- [Bb]ackup.rdl
+*- [Bb]ackup ([0-9]).rdl
+*- [Bb]ackup ([0-9][0-9]).rdl
+
+## Microsoft Fakes
+FakesAssemblies/
+
+## Node.js (caso use ferramentas node)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+## Rider
+.idea/
+*.sln.iml
+
+## ReSharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+## TeamCity
+_TeamCity*
+
+## DotCover
+*.dotCover
+
+## AxoCover
+.axoCover/*
+!.axoCover/settings.json
+
+## Coverlet
+coverage*.json
+coverage*.xml
+coverage*.info
+
+## Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+## Local History for Visual Studio Code
+.history/
+.ionide/
+
+## Windows image file caches
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+## Dump file
+*.stackdump
+
+## Folder config file
+[Dd]esktop.ini
+
+## Recycle Bin
+$RECYCLE.BIN/
+
+## Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+## Windows shortcuts
+*.lnk
+
+## macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+## JetBrains Rider
+.idea/
+.idea_modules/
+*.sln.iml
+*.suo
+*.user
+.vs/
+
+## NuGet Packages
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+
+## NuGet Symbol Packages
+*.snupkg
+
+## Paket dependency manager
+.paket/paket.exe
+paket-files/
+
+## FAKE - F# Make
+.fake/
+
+## CodeRush personal settings
+.cr/personal
+
+## Python tools for Visual Studio (PTVS)
+__pycache__/
+*.pyc
+
+## Cake
+tools/**
+!tools/packages.config
+
+## Tabs Studio
+*.tss
+
+## Telerik JustMock
+*.jmconfig
+
+## BizTalk build output
+*.btp.cs
+*.btm.cs
+*.odx.cs
+*.xsd.cs
+
+## OpenCover UI analysis results
+OpenCover/
+
+## Azure Stream Analytics local run output
+ASALocalRun/
+
+## MSBuild Binary and Structured Log
+*.binlog
+
+## NVidia Nsight GPU debugger
+*.nvuser
+
+## MFractors (Xamarin productivity tools)
+.mfractor/
+
+## Local History for Visual Studio
+.localhistory/
+
+## Visual Studio History (VSHistory)
+.vshistory/
+
+## BeatPulse healthcheck temp db
+healthchecksdb
+
+## Backup folder for Package Reference Convert tool
+MigrationBackup/
+
+## Ionide (cross platform F# VS Code tools)
+.ionide/
+
+## Fody - auto-generated XML schema
+FodyWeavers.xsd
+
+## VS Code files for those working on multiple tools
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+## Local History for Visual Studio Code
+.history/
+
+## Windows Installer files from build outputs
+*.appx
+*.appxbundle
+*.appxupload
+
+## Temporary files
+*.tmp
+*~
+.cleanup_summary.txt
+
+## WinUI 3 / MSIX specific
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+*.appx
+*.appxbundle
+*.appxupload

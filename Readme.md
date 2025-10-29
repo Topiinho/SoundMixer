@@ -1,144 +1,150 @@
-# Projeto Sonus Mixer
+# 🎧 SoundMixer
 
-## 📋 Visão Geral
+Um mixer de áudio profissional para Windows, desenvolvido em C# com WinUI 3, oferecendo controle granular de áudio por aplicação e roteamento virtual.
 
-O **Sonus Mixer** é um mixer de áudio profissional para Windows, com interface moderna inspirada em ferramentas como **Discord**, **OBS Studio** e **VoiceMeeter**. O objetivo é oferecer **controle granular** de áudio por aplicação, roteamento virtual e monitoramento em tempo real, tudo em uma interface intuitiva e leve (sem Electron).
+## 🎯 Sobre o Projeto
 
----
+SoundMixer é um aplicativo desktop moderno que permite controlar individualmente o volume de cada aplicação que emite som no Windows, além de oferecer recursos avançados de roteamento de áudio entre dispositivos.
 
-## 🚀 Execução Rápida
+### Características Principais
+
+- ✅ **Controle Individual de Volume** - Ajuste o volume de cada aplicação separadamente
+- ✅ **Detecção Automática** - Identifica automaticamente apps com áudio ativo
+- ✅ **Interface Moderna** - Design baseado em Fluent Design (Windows 11)
+- ✅ **Roteamento de Áudio** - Direcione áudio de apps para diferentes dispositivos
+- 🚧 **Virtual Audio Cables** - Sistema de cabos de áudio virtuais (planejado)
+- 🚧 **Perfis e Presets** - Salve configurações de volume (planejado)
+
+## 🛠️ Tecnologias Utilizadas
+
+### Framework e UI
+- **.NET 9.0** - Framework principal
+- **WinUI 3** - Interface de usuário moderna
+- **Windows App SDK** - APIs do Windows
+
+### Bibliotecas
+- **NAudio** (2.2.1) - Controle de áudio e manipulação
+- **NAudio.Wasapi** - API de áudio do Windows (WASAPI)
+- **CommunityToolkit.Mvvm** (8.4.0) - Framework MVVM
+
+### Arquitetura
+- **MVVM Pattern** - Separação de responsabilidades
+- **Dependency Injection** - Injeção de dependências
+- **Clean Architecture** - Camadas bem definidas
+
+## 📋 Requisitos do Sistema
+
+- **OS:** Windows 10 version 1809 (build 17763) ou superior
+- **Recomendado:** Windows 11
+- **.NET:** .NET 9.0 SDK
+- **IDE:** Visual Studio 2022 (v17.8+) ou VSCode
+
+## 🚀 Como Executar
+
+### Via Visual Studio
+
+1. Abra `SoundMixer.sln` no Visual Studio 2022
+2. Selecione a plataforma **x64** na barra de ferramentas
+3. Pressione **F5** para compilar e executar
+
+### Via Linha de Comando
 
 ```bash
-# Windows
-cd C:\Users\alcan\Downloads\0-Code\SoundMixer
-python main.py
+# Navegar até a pasta do projeto
+cd C:\path\to\SoundMixer
+
+# Compilar o projeto
+dotnet build -p:Platform=x64
+
+# Executar o aplicativo
+dotnet run --project SoundMixer.csproj -p:Platform=x64
 ```
 
-> 📖 **Para instruções detalhadas, consulte:** [`COMO_EXECUTAR.md`](COMO_EXECUTAR.md)
-
----
-
-## 🎯 Objetivos do Projeto
-
-### Objetivo Principal
-
-Criar um **mixer de áudio desktop nativo** para Windows que permita controle individual e global de áudio com foco em usabilidade, performance e design moderno.
-
-### Objetivos Específicos
-
-* ✅ Controle individual de volume por aplicativo
-* ✅ Interface nativa com **PyWebView**
-* ✅ Detecção automática de aplicações com áudio
-* ✅ Suporte a **Virtual Audio Cables**
-* ✅ Sistema de roteamento flexível
-* ✅ Hot-reload para desenvolvimento
-* ✅ Visual inspirado no Discord (tema escuro)
-
----
-
-## 🏗️ Arquitetura do Sistema
-
-### Stack Tecnológico
-
-#### Backend (Python)
-
-* **Python 3.11+**: Linguagem principal
-* **pycaw**: Controle via Windows Core Audio API
-* **psutil**: Informações de processos
-* **comtypes**: Interface COM para Windows
-* **PyWebView**: Interface nativa sem Electron
-
-#### Frontend (Web)
-
-* **HTML5**: Estrutura semântica
-* **CSS3**: Estilo (tema Discord)
-* **JavaScript Vanilla**: Lógica sem frameworks pesados
-* **Bootstrap 5**: Componentes UI
-* **Font Awesome**: Ícones
-
-### Estrutura de Diretórios
+## 📂 Estrutura do Projeto
 
 ```
 SoundMixer/
-├── src/
-│   ├── core/                    # Módulos principais
-│   │   ├── audio_detector.py    # Detecção de apps com áudio
-│   │   ├── volume_controller.py # Controle de volume
-│   │   └── virtual_cable.py     # Virtual Audio Cables
-│   │
-│   ├── web/                     # Interface Web
-│   │   ├── index.html           # Interface principal
-│   │   ├── css/
-│   │   │   ├── discord-style.css    # Tema Discord
-│   │   │   ├── mixer-components.css # Componentes mixer
-│   │   │   └── animations.css       # Animações
-│   │   └── js/
-│   │       └── mixer.js            # Lógica frontend
-│   │
-│   └── main.py                     # App principal
+├── SoundMixer/                     # Projeto WinUI 3 (Interface)
+│   ├── Views/                      # Páginas XAML
+│   ├── ViewModels/                 # ViewModels (MVVM)
+│   ├── Models/                     # Modelos de dados
+│   ├── Services/                   # Serviços da UI
+│   ├── Controls/                   # Controles customizados
+│   ├── Converters/                 # Value Converters
+│   ├── Themes/                     # Temas e estilos
+│   ├── Helpers/                    # Utilitários
+│   └── Assets/                     # Ícones e imagens
 │
-├── docs/                           # Documentação
-├── tests/                          # Testes automatizados
-└── requirements.txt                # Dependências
+├── SoundMixer.Core/                # Class Library (Lógica de Negócio)
+│   ├── Models/                     # Modelos de domínio
+│   ├── Services/                   # Serviços de áudio (NAudio)
+│   ├── Contracts/                  # Interfaces
+│   └── Helpers/                    # Utilitários
+│
+└── README.md                       # Este arquivo
 ```
 
----
+## 🎯 Roadmap
 
-## 🔧 Funcionalidades Principais
+### Fase 1 - MVP (Em Andamento)
+- [x] Estrutura base do projeto
+- [x] Configuração WinUI 3 + NAudio
+- [ ] Listar aplicações com áudio ativo
+- [ ] Controle de volume individual por app
+- [ ] UI básica com sliders
+- [ ] Volume master global
 
-### 1. Detecção de Aplicações
+### Fase 2 - Roteamento
+- [ ] Listar dispositivos de entrada/saída
+- [ ] Permitir seleção de dispositivo por app
+- [ ] Roteamento básico entre endpoints
 
-* **Automática**: Detecta apps com sessões de áudio ativas
-* **Tempo Real**: Atualização via botão refresh
-* **Filtros**: Ignora processos do sistema
-* **Cache**: Otimização de performance
+### Fase 3 - Virtual Cables
+- [ ] Integração com Virtual Audio Cables
+- [ ] Sistema de patches virtuais
+- [ ] Loopback e mixing avançado
 
-### 2. Controle de Volume
+### Fase 4 - UI Polida e Extras
+- [ ] Interface completa estilo Windows 11
+- [ ] VU meters e spectrum analyzer
+- [ ] Hotkeys e atalhos
+- [ ] Perfis e presets salvos
+- [ ] Sistema de temas
 
-* **Individual**: Por aplicação (0–100%)
-* **Master**: Volume global do sistema
-* **Mute/Solo**: Por canal
+> 📖 Para detalhes completos do roadmap, consulte: [Plano_de_Refatoracao.md](Plano_de_Refatoracao.md)
 
-### 3. Interface Visual
+## 🎨 Inspirações
 
-* **Tema Discord**: Dark mode profissional
-* **VU Meters**: Visualização de níveis
-* **Spectrum Analyzer**: Análise espectral
-* **Activity Log**: Registro de atividades
+- **EarTrumpet** - Controle de volume por aplicação
+- **Discord** - Design moderno e intuitivo
+- **OBS Studio** - Sistema de mixer profissional
+- **VoiceMeeter** - Roteamento de áudio virtual
 
-### 4. Virtual Audio Cables
+## 📚 Recursos e Referências
 
-* **Roteamento**: Entre aplicações
-* **Mixing**: Combinação de múltiplas fontes
-* **Loopback**: Captura interna
-* **Patches**: Conexões virtuais
+### Projetos Similares
+- [EarTrumpet](https://github.com/File-New-Project/EarTrumpet) - Volume Control for Windows
+- [ModernFlyouts](https://github.com/ModernFlyouts-Community/ModernFlyouts) - Modern UI for Windows flyouts
 
----
+### Documentação
+- [WinUI 3 Docs](https://learn.microsoft.com/windows/apps/winui/)
+- [NAudio GitHub](https://github.com/naudio/NAudio)
+- [MVVM Toolkit](https://learn.microsoft.com/dotnet/communitytoolkit/mvvm/)
 
-## 🎯 Casos de Uso
+## 🤝 Contribuindo
 
-### 1. Streamer
-
-* Controlar Discord vs Game vs Música
-* Criar mix para transmissão
-* Mute rápido durante live
-
-### 2. Usuário Casual
-
-* Ajustar volume do Spotify
-* Mutar Discord em jogos
-* Equalizar volumes entre apps
-
----
+Contribuições são bem-vindas! Este é um projeto em desenvolvimento ativo.
 
 ## 📄 Licença
 
-MIT License – Projeto de código aberto
+MIT License - Projeto de código aberto
+
+## 👨‍💻 Autor
+
+**Vitor Pinho Alcantara**
 
 ---
 
-## 👥 Contribuidores
+**Status do Projeto:** 🚧 Em Desenvolvimento Ativo
 
-* **Desenvolvedor Principal**: Vitor Pinho Alcantara
-* **UI/UX**: Inspirado no Discord
-* **Testes**: Comunidade
+**Última Atualização:** Outubro 2025
