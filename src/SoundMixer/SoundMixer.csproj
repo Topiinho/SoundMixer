@@ -51,6 +51,7 @@
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.*" />
         <PackageReference Include="Microsoft.Web.WebView2" Version="1.*" />
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.*" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 
         <Manifest Include="$(ApplicationManifest)" />
     </ItemGroup>
@@ -65,6 +66,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\SoundMixer.Core\SoundMixer.Core.csproj" />
+      <ProjectReference Include="..\SoundMixer.Infrastructure\SoundMixer.Infrastructure.csproj" />
     </ItemGroup>
 
     <!-- 

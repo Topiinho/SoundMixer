@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="SoundMixer.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid Padding="20" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Spacing="20" MaxWidth="500">
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Left">
+                <Button Content="← Voltar" Command="{x:Bind ViewModel.GoBackCommand}"/>
+            </StackPanel>
+            <TextBlock Text="Configurações" Style="{StaticResource TitleTextBlockStyle}"/>
+
+            <StackPanel Spacing="16" Padding="16" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" CornerRadius="8">
+                <TextBlock Text="Comportamento" FontSize="16" FontWeight="SemiBold"/>
+
+                <StackPanel Spacing="8">
+                    <CheckBox Content="Iniciar automaticamente" IsChecked="{x:Bind ViewModel.AutoStartEnabled, Mode=TwoWay}"/>
+                    <TextBlock Text="Inicie o SoundMixer quando o Windows iniciar" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Margin="0,0,0,8"/>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <CheckBox Content="Minimizar na bandeja" IsChecked="{x:Bind ViewModel.MinimizeToTrayEnabled, Mode=TwoWay}"/>
+                    <TextBlock Text="Minimize para a bandeja do sistema em vez de fechar" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Margin="0,0,0,8"/>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <CheckBox Content="Lembrar volumes" IsChecked="{x:Bind ViewModel.RememberVolumeEnabled, Mode=TwoWay}"/>
+                    <TextBlock Text="Restaure os volumes dos aplicativos na próxima inicialização" FontSize="12" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" Margin="0,0,0,8"/>
+                </StackPanel>
+
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Verificar atualizações" FontWeight="SemiBold"/>
+                    <ComboBox SelectedItem="{x:Bind ViewModel.UpdateCheckFrequency, Mode=TwoWay}" Width="200">
+                        <x:String>Never</x:String>
+                        <x:String>Weekly</x:String>
+                        <x:String>Monthly</x:String>
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Text="Versão 1.0" Foreground="{ThemeResource ApplicationSecondaryForegroundThemeBrush}" FontSize="12"/>
+
+            <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Right">
+                <Button Content="Resetar" Command="{x:Bind ViewModel.ResetToDefaultsCommand}"/>
+                <Button Content="Salvar" Command="{x:Bind ViewModel.SaveSettingsCommand}" Style="{ThemeResource AccentButtonStyle}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

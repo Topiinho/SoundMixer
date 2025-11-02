@@ -56,7 +56,12 @@ public class NAudioApplicationProvider : IApplicationAudioProvider
 
             var sessionManager = device.AudioSessionManager;
             if (sessionManager == null)
+            {
+                System.Diagnostics.Debug.WriteLine("SessionManager is null");
                 return await Task.FromResult(apps);
+            }
+
+            System.Diagnostics.Debug.WriteLine($"Found {sessionManager.Sessions.Count} audio sessions");
 
             for (int i = 0; i < sessionManager.Sessions.Count; i++)
             {
@@ -67,29 +72,39 @@ public class NAudioApplicationProvider : IApplicationAudioProvider
 
                     uint processIdUint = session.GetProcessID;
                     int processId = (int)processIdUint;
+
+                    System.Diagnostics.Debug.WriteLine($"Session {i}: ProcessID={processId}");
+
                     if (processId == 0) continue;
+
+                    var processName = GetProcessName(processId);
+                    var volume = session.SimpleAudioVolume.Volume;
+                    var isMuted = session.SimpleAudioVolume.Mute;
 
                     var app = new AudioApplication
                     {
                         ProcessId = processId,
-                        ProcessName = GetProcessName(processId),
-                        Volume = session.SimpleAudioVolume.Volume,
-                        IsMuted = session.SimpleAudioVolume.Mute
+                        ProcessName = processName,
+                        Volume = volume,
+                        IsMuted = isMuted
                     };
 
+                    System.Diagnostics.Debug.WriteLine($"Added app: {processName} (PID: {processId}, Volume: {volume}, Muted: {isMuted})");
                     apps.Add(app);
                 }
-                catch
+                catch (Exception ex)
                 {
+                    System.Diagnostics.Debug.WriteLine($"Error processing session {i}: {ex.Message}");
                     continue;
                 }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // Retorna lista vazia se algo der errado
+            System.Diagnostics.Debug.WriteLine($"Error in GetActiveApplicationsAsync: {ex.Message}");
         }
 
+        System.Diagnostics.Debug.WriteLine($"Returning {apps.Count} applications");
         return await Task.FromResult(apps);
     }
 

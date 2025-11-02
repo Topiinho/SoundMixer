@@ -1,9 +1,6 @@
 {
   "profiles": {
-    "SoundMixer (Package)": {
-      "commandName": "MsixPackage"
-    },
-    "SoundMixer (Unpackaged)": {
+    "SoundMixer": {
       "commandName": "Project"
     }
   }

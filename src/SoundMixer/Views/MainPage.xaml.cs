@@ -1,18 +1,22 @@
+using SoundMixer.ViewModels;
+
 namespace SoundMixer.Views
 {
     /// <summary>
-    /// A simple page that can be used on its own or navigated to within a Frame.
+    /// Main application page with navigation
     /// </summary>
     public partial class MainPage : Page
     {
-        int count = 0;
+        public MainViewModel ViewModel { get; }
 
         public MainPage()
         {
             this.InitializeComponent();
-        }
 
-        private void OnCountClicked(object sender, RoutedEventArgs e)
-            => txtCount.Text = $"Current count: {count++}";
+            // Inject MainViewModel from DI container
+            var app = Application.Current as App;
+            ViewModel = app?.GetService<MainViewModel>() ?? new MainViewModel(null!);
+            this.DataContext = ViewModel;
+        }
     }
 }
